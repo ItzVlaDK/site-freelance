@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vlad Kabak — Automações e dashboards para pequenos negócios</title>
+<meta name="description" content="Automações, dashboards e ferramentas internas à medida para pequenas empresas que perdem tempo com processos manuais.">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&display=swap');
+
+  :root{
+    --paper: #EDEFE6;
+    --paper-alt: #F7F6EF;
+    --ink: #1B2420;
+    --ink-soft: #47554C;
+    --accent: #2F6844;
+    --accent-soft: #8CAE97;
+    --gold: #A9822F;
+    --line: #C7CBB8;
+    --white: #FBFAF6;
+    --serif: 'Fraunces', serif;
+    --sans: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  *{ box-sizing: border-box; margin: 0; padding: 0; }
+
+  html{ scroll-behavior: smooth; }
+
+  body{
+    font-family: var(--sans);
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a{ color: inherit; }
+
+  img, svg{ display: block; max-width: 100%; }
+
+  :focus-visible{
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  .wrap{
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  /* ---------- Header ---------- */
+
+  header{
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(237,239,230,0.92);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .header-inner{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 32px;
+    max-width: 1120px;
+    margin: 0 auto;
+  }
+
+  .brand{
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 1.15rem;
+    letter-spacing: 0.01em;
+    text-decoration: none;
+    color: var(--ink);
+  }
+
+  nav.nav-links{
+    display: flex;
+    gap: 32px;
+    font-size: 0.92rem;
+  }
+
+  nav.nav-links a{
+    text-decoration: none;
+    color: var(--ink-soft);
+    border-bottom: 1px solid transparent;
+    padding-bottom: 2px;
+    transition: border-color 0.15s ease, color 0.15s ease;
+  }
+
+  nav.nav-links a:hover{
+    color: var(--ink);
+    border-color: var(--accent);
+  }
+
+  .nav-cta{
+    display: inline-block;
+    background: var(--ink);
+    color: var(--white) !important;
+    padding: 9px 18px;
+    font-size: 0.88rem;
+    text-decoration: none;
+    border-radius: 3px;
+  }
+
+  .menu-toggle{
+    display: none;
+    background: none;
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    width: 38px;
+    height: 38px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    color: var(--ink);
+  }
+
+  /* ---------- Hero ---------- */
+
+  .hero{
+    position: relative;
+    padding: 96px 0 88px;
+    overflow: hidden;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .hero::before{
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      repeating-linear-gradient(0deg, rgba(199,203,184,0.5) 0, rgba(199,203,184,0.5) 1px, transparent 1px, transparent 68px),
+      repeating-linear-gradient(90deg, rgba(199,203,184,0.5) 0, rgba(199,203,184,0.5) 1px, transparent 1px, transparent 68px);
+    mask-image: linear-gradient(to bottom, black, transparent 85%);
+    pointer-events: none;
+  }
+
+  .hero-inner{
+    position: relative;
+    max-width: 720px;
+  }
+
+  .hero-tag{
+    display: inline-block;
+    font-family: var(--sans);
+    font-size: 0.82rem;
+    color: var(--accent);
+    background: var(--paper-alt);
+    border: 1px solid var(--line);
+    padding: 5px 12px;
+    border-radius: 3px;
+    margin-bottom: 28px;
+  }
+
+  h1{
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(2.3rem, 5vw, 3.6rem);
+    line-height: 1.12;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    max-width: 12ch;
+  }
+
+  .hero p.lede{
+    margin-top: 26px;
+    font-size: 1.15rem;
+    color: var(--ink-soft);
+    max-width: 46ch;
+  }
+
+  .hero-ctas{
+    display: flex;
+    gap: 16px;
+    margin-top: 40px;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary, .btn-secondary{
+    font-family: var(--sans);
+    font-size: 0.95rem;
+    font-weight: 500;
+    padding: 13px 26px;
+    border-radius: 3px;
+    text-decoration: none;
+    display: inline-block;
+    border: 1px solid transparent;
+  }
+
+  .btn-primary{
+    background: var(--accent);
+    color: var(--white);
+  }
+
+  .btn-primary:hover{ background: #275939; }
+
+  .btn-secondary{
+    border-color: var(--ink);
+    color: var(--ink);
+  }
+
+  .btn-secondary:hover{ background: var(--paper-alt); }
+
+  [data-animate]{
+    opacity: 0;
+    transform: translateY(10px);
+    animation: rise 0.7s ease forwards;
+  }
+  [data-animate="1"]{ animation-delay: 0.05s; }
+  [data-animate="2"]{ animation-delay: 0.18s; }
+  [data-animate="3"]{ animation-delay: 0.3s; }
+
+  @keyframes rise{
+    to{ opacity: 1; transform: translateY(0); }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    [data-animate]{ animation: none; opacity: 1; transform: none; }
+    html{ scroll-behavior: auto; }
+  }
+
+  /* ---------- Problem / before-after ---------- */
+
+  .problem{ border-bottom: 1px solid var(--line); }
+
+  .problem-intro{ max-width: 62ch; margin-bottom: 52px; }
+
+  .problem-intro p{ margin-top: 14px; color: var(--ink-soft); font-size: 1.02rem; }
+
+  .before-after{
+    display: grid;
+    grid-template-columns: 1fr 60px 1fr;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .ba-panel{
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .ba-label{
+    font-size: 0.8rem;
+    font-weight: 500;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .ba-label.messy{ color: #9A4B34; }
+  .ba-label.clean{ color: var(--accent); }
+
+  .ba-arrow{ display: flex; align-items: center; justify-content: center; }
+
+  .messy-sheet{ padding: 14px; }
+
+  .sheet-grid{
+    display: grid;
+    grid-template-columns: 26px repeat(4, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    font-size: 0.72rem;
+  }
+
+  .sheet-cell{
+    background: var(--white);
+    padding: 7px 5px;
+    color: var(--ink-soft);
+    min-height: 13px;
+  }
+
+  .sheet-head{
+    background: var(--paper-alt);
+    font-weight: 500;
+    text-align: center;
+    color: var(--ink-soft);
+  }
+
+  .sheet-cell.flag{ background: #FBEDE7; color: #9A4B34; }
+
+  .sheet-note{ margin-top: 12px; font-size: 0.76rem; color: #9A4B34; }
+  .sheet-note span{ display: block; }
+
+  .clean-dash{ padding: 18px; }
+
+  .kpi-row{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+
+  .kpi{
+    background: var(--paper-alt);
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    padding: 10px 12px;
+  }
+
+  .kpi-num{ font-family: var(--serif); font-size: 1.2rem; color: var(--ink); }
+  .kpi-label{ font-size: 0.66rem; color: var(--ink-soft); margin-top: 2px; }
+
+  .bar-chart{
+    display: flex;
+    align-items: flex-end;
+    gap: 6px;
+    height: 84px;
+    padding: 0 4px;
+  }
+
+  .bar{
+    flex: 1;
+    background: var(--accent);
+    border-radius: 2px 2px 0 0;
+    opacity: 0.85;
+  }
+
+  .bar-labels{ display: flex; gap: 6px; padding: 0 4px; margin-top: 6px; }
+  .bar-labels span{ flex: 1; font-size: 0.62rem; color: var(--ink-soft); text-align: center; }
+
+  .dash-caption{ font-size: 0.72rem; color: var(--accent-soft); margin-top: 12px; }
+
+  /* ---------- Example mockups ---------- */
+
+  .stock-table{ width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+
+  .stock-table th, .stock-table td{
+    text-align: left;
+    padding: 7px 4px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .stock-table th{ font-weight: 500; color: var(--ink-soft); font-size: 0.72rem; }
+
+  .pill{ display: inline-block; padding: 2px 9px; border-radius: 10px; font-size: 0.68rem; }
+  .pill.ok{ background: #E4EFE7; color: var(--accent); }
+  .pill.low{ background: #F6EEDC; color: var(--gold); }
+  .pill.out{ background: #FBEDE7; color: #9A4B34; }
+
+  .report-tag{
+    display: inline-block;
+    font-size: 0.68rem;
+    color: var(--accent-soft);
+    background: var(--paper-alt);
+    border: 1px solid var(--line);
+    padding: 2px 9px;
+    border-radius: 3px;
+    margin-bottom: 12px;
+  }
+
+  .skeleton-line{ height: 7px; background: var(--paper-alt); border-radius: 2px; margin-bottom: 7px; }
+  .skeleton-line.w1{ width: 100%; }
+  .skeleton-line.w2{ width: 82%; }
+  .skeleton-line.w3{ width: 58%; }
+
+  .sparkline{ margin-top: 14px; }
+
+  /* ---------- Section shared ---------- */
+
+  section{ padding: 84px 0; }
+
+  .section-head{
+    max-width: 52ch;
+    margin-bottom: 56px;
+  }
+
+  .section-kicker{
+    font-family: var(--sans);
+    font-size: 0.85rem;
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+
+  h2{
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(1.7rem, 3vw, 2.3rem);
+    color: var(--ink);
+    line-height: 1.2;
+  }
+
+  .section-head p{
+    margin-top: 14px;
+    color: var(--ink-soft);
+    font-size: 1.02rem;
+  }
+
+  /* ---------- Services (grid-cell motif) ---------- */
+
+  .services{
+    background: var(--paper-alt);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .service-grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    overflow: hidden;
+    background: var(--white);
+  }
+
+  .service-cell{
+    padding: 34px 30px;
+    border-right: 1px solid var(--line);
+    position: relative;
+  }
+
+  .service-cell:last-child{ border-right: none; }
+
+  .cell-ref{
+    font-family: var(--sans);
+    font-size: 0.75rem;
+    color: var(--accent-soft);
+    margin-bottom: 22px;
+  }
+
+  .service-cell h3{
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 1.28rem;
+    margin-bottom: 12px;
+    color: var(--ink);
+  }
+
+  .service-cell p{
+    font-size: 0.96rem;
+    color: var(--ink-soft);
+  }
+
+  /* ---------- Process ---------- */
+
+  .process-list{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    position: relative;
+  }
+
+  .process-list::before{
+    content: "";
+    position: absolute;
+    top: 17px;
+    left: 6%;
+    right: 6%;
+    height: 1px;
+    background: var(--line);
+  }
+
+  .process-item{ position: relative; }
+
+  .process-num{
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--paper);
+    border: 1px solid var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--serif);
+    font-size: 1rem;
+    margin-bottom: 22px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .process-item h3{
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 1.12rem;
+    margin-bottom: 8px;
+  }
+
+  .process-item p{
+    font-size: 0.94rem;
+    color: var(--ink-soft);
+  }
+
+  /* ---------- Examples ---------- */
+
+  .examples{
+    background: var(--paper-alt);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .example-grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .example-card{
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 26px;
+  }
+
+  .example-icon{ margin-bottom: 20px; }
+
+  .example-card h3{
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 1.08rem;
+    margin-bottom: 10px;
+  }
+
+  .example-card p{
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+  }
+
+  /* ---------- About ---------- */
+
+  .about-inner{
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 64px;
+    align-items: start;
+  }
+
+  .about-label{
+    font-family: var(--serif);
+    font-size: 1.4rem;
+    color: var(--accent);
+  }
+
+  .about-inner p{
+    font-size: 1.05rem;
+    color: var(--ink-soft);
+    max-width: 58ch;
+  }
+
+  .about-inner p + p{ margin-top: 16px; }
+
+  /* ---------- Contact ---------- */
+
+  .contact{
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .contact h2{ color: var(--white); }
+
+  .contact .section-head p{ color: var(--accent-soft); }
+
+  .contact-row{
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 8px;
+  }
+
+  .contact-email{
+    font-family: var(--serif);
+    font-size: clamp(1.5rem, 3vw, 2.1rem);
+    color: var(--white);
+    text-decoration: none;
+    border-bottom: 1px solid var(--accent-soft);
+  }
+
+  .contact-email:hover{ border-color: var(--white); }
+
+  .contact-note{
+    font-size: 0.86rem;
+    color: var(--accent-soft);
+    margin-top: 28px;
+    max-width: 50ch;
+  }
+
+  /* ---------- Footer ---------- */
+
+  footer{
+    padding: 32px;
+    text-align: center;
+    font-size: 0.82rem;
+    color: var(--ink-soft);
+  }
+
+  /* ---------- Responsive ---------- */
+
+  @media (max-width: 860px){
+    .service-grid{ grid-template-columns: 1fr; }
+    .service-cell{ border-right: none; border-bottom: 1px solid var(--line); }
+    .service-cell:last-child{ border-bottom: none; }
+    .process-list{ grid-template-columns: 1fr; gap: 28px; }
+    .process-list::before{ display: none; }
+    .example-grid{ grid-template-columns: 1fr; }
+    .about-inner{ grid-template-columns: 1fr; gap: 20px; }
+  }
+
+  @media (max-width: 700px){
+    nav.nav-links{ display: none; }
+    .menu-toggle{ display: block; }
+    .header-inner{ padding: 16px 20px; }
+    .wrap{ padding: 0 20px; }
+    .hero{ padding: 64px 0 56px; }
+    section{ padding: 60px 0; }
+  }
+
+  nav.nav-links.open{
+    display: flex;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+    flex-direction: column;
+    gap: 0;
+    padding: 8px 20px 16px;
+  }
+
+  nav.nav-links.open a{
+    padding: 12px 0;
+    border-bottom: 1px solid var(--line);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="#top" class="brand">Vlad Kabak</a>
+    <nav class="nav-links" id="navLinks">
+      <a href="#problema">Porquê</a>
+      <a href="#servicos">Serviços</a>
+      <a href="#processo">Como funciona</a>
+      <a href="#exemplos">Exemplos</a>
+      <a href="#sobre">Sobre</a>
+      <a href="#contacto" class="nav-cta">Contactar</a>
+    </nav>
+    <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu" aria-expanded="false">☰</button>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="wrap hero-inner">
+      <span class="hero-tag" data-animate="1">Automação · Dashboards · Ferramentas internas</span>
+      <h1 data-animate="2">As tuas folhas de cálculo podem trabalhar sozinhas.</h1>
+      <p class="lede" data-animate="3">
+        Construo automações, dashboards e ferramentas internas para
+        negócios que ainda perdem horas por semana com processos
+        manuais.
+      </p>
+      <div class="hero-ctas" data-animate="3">
+        <a href="#contacto" class="btn-primary">Marcar uma conversa</a>
+        <a href="#exemplos" class="btn-secondary">Ver o que posso construir</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="problem" id="problema">
+    <div class="wrap">
+      <div class="problem-intro">
+        <p class="section-kicker">Porquê</p>
+        <h2>Se ainda copias números à mão, estás a pagar esse tempo com o negócio</h2>
+        <p>
+          Um relatório que demora uma tarde a montar. Um erro que só
+          se nota semanas depois. Isto resolve-se com automação.
+        </p>
+      </div>
+      <div class="before-after">
+        <div class="ba-panel">
+          <div class="ba-label messy">Antes — folha manual</div>
+          <div class="messy-sheet">
+            <div class="sheet-grid">
+              <div class="sheet-cell sheet-head"></div>
+              <div class="sheet-cell sheet-head">A</div>
+              <div class="sheet-cell sheet-head">B</div>
+              <div class="sheet-cell sheet-head">C</div>
+              <div class="sheet-cell sheet-head">D</div>
+
+              <div class="sheet-cell sheet-head">1</div>
+              <div class="sheet-cell">Loja</div>
+              <div class="sheet-cell">Vendas</div>
+              <div class="sheet-cell">Vendas</div>
+              <div class="sheet-cell flag">?</div>
+
+              <div class="sheet-cell sheet-head">2</div>
+              <div class="sheet-cell">Porto</div>
+              <div class="sheet-cell">1240</div>
+              <div class="sheet-cell flag">1240</div>
+              <div class="sheet-cell"></div>
+
+              <div class="sheet-cell sheet-head">3</div>
+              <div class="sheet-cell">Lisboa</div>
+              <div class="sheet-cell flag"></div>
+              <div class="sheet-cell">980</div>
+              <div class="sheet-cell"></div>
+
+              <div class="sheet-cell sheet-head">4</div>
+              <div class="sheet-cell">Braga</div>
+              <div class="sheet-cell">760</div>
+              <div class="sheet-cell">—</div>
+              <div class="sheet-cell flag">dup.</div>
+            </div>
+            <div class="sheet-note">
+              <span>Atualizado à mão, todas as semanas.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="ba-arrow">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#2F6844" stroke-width="1.8"><path d="M4 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+
+        <div class="ba-panel">
+          <div class="ba-label clean">Depois — painel automático</div>
+          <div class="clean-dash">
+            <div class="kpi-row">
+              <div class="kpi"><div class="kpi-num">2 980€</div><div class="kpi-label">Vendas totais</div></div>
+              <div class="kpi"><div class="kpi-num">3</div><div class="kpi-label">Lojas</div></div>
+              <div class="kpi"><div class="kpi-num">0</div><div class="kpi-label">Erros</div></div>
+            </div>
+            <div class="bar-chart">
+              <div class="bar" style="height:55%"></div>
+              <div class="bar" style="height:70%"></div>
+              <div class="bar" style="height:40%"></div>
+              <div class="bar" style="height:85%"></div>
+              <div class="bar" style="height:60%"></div>
+              <div class="bar" style="height:95%"></div>
+              <div class="bar" style="height:50%"></div>
+            </div>
+            <div class="bar-labels">
+              <span>S</span><span>T</span><span>Q</span><span>Q</span><span>S</span><span>S</span><span>D</span>
+            </div>
+            <div class="dash-caption">Atualizado automaticamente às 06:00</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="services" id="servicos">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="section-kicker">Serviços</p>
+        <h2>Três formas de tirar o trabalho manual do teu dia a dia</h2>
+      </div>
+      <div class="service-grid">
+        <div class="service-cell">
+          <div class="cell-ref">A1</div>
+          <h3>Automação de processos</h3>
+          <p>Relatórios que se atualizam sozinhos — um que demorava uma tarde, pronto toda as segundas às 8h.</p>
+        </div>
+        <div class="service-cell">
+          <div class="cell-ref">B1</div>
+          <h3>Dashboards claros</h3>
+          <p>Um único painel com vendas, stock e devoluções, em vez de 5 ficheiros soltos.</p>
+        </div>
+        <div class="service-cell">
+          <div class="cell-ref">C1</div>
+          <h3>Ferramentas à medida</h3>
+          <p>Uma app simples para a equipa registar turnos, sem folhas soltas nem grupos de WhatsApp.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="processo">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="section-kicker">Como funciona</p>
+        <h2>Do primeiro contacto à entrega</h2>
+      </div>
+      <div class="process-list">
+        <div class="process-item">
+          <div class="process-num">1</div>
+          <h3>Conversa inicial</h3>
+          <p>15–20 minutos para perceber o problema e ver se faz sentido avançar. Sem compromisso.</p>
+        </div>
+        <div class="process-item">
+          <div class="process-num">2</div>
+          <h3>Proposta e prazo</h3>
+          <p>Âmbito claro, preço fechado e prazo definido antes de começar qualquer trabalho.</p>
+        </div>
+        <div class="process-item">
+          <div class="process-num">3</div>
+          <h3>Entrega e acompanhamento</h3>
+          <p>Testamos juntos, ajusto o que for preciso e explico como tudo funciona.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="examples" id="exemplos">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="section-kicker">Exemplos</p>
+        <h2>O que posso construir</h2>
+        <p>Mockups ilustrativos — troco por projetos reais assim que houver os primeiros.</p>
+      </div>
+      <div class="example-grid">
+        <div class="example-card">
+          <h3>Painel de vendas semanal</h3>
+          <div class="kpi-row">
+            <div class="kpi"><div class="kpi-num">18</div><div class="kpi-label">Encomendas hoje</div></div>
+            <div class="kpi"><div class="kpi-num">+12%</div><div class="kpi-label">vs. semana ant.</div></div>
+          </div>
+          <div class="bar-chart" style="height:60px;">
+            <div class="bar" style="height:45%"></div>
+            <div class="bar" style="height:65%"></div>
+            <div class="bar" style="height:35%"></div>
+            <div class="bar" style="height:80%"></div>
+            <div class="bar" style="height:55%"></div>
+          </div>
+          <p style="margin-top:14px;">Dados de várias lojas, sem atualização manual.</p>
+        </div>
+        <div class="example-card">
+          <h3>Gestão de stock</h3>
+          <table class="stock-table">
+            <tr><th>Artigo</th><th>Stock</th><th>Estado</th></tr>
+            <tr><td>Ténis A12</td><td>34</td><td><span class="pill ok">Em stock</span></td></tr>
+            <tr><td>Ténis B04</td><td>6</td><td><span class="pill low">Baixo</span></td></tr>
+            <tr><td>Meia C7</td><td>0</td><td><span class="pill out">Esgotado</span></td></tr>
+          </table>
+          <p style="margin-top:14px;">Avisa antes de um artigo esgotar.</p>
+        </div>
+        <div class="example-card">
+          <span class="report-tag">Gerado automaticamente · 1 set</span>
+          <h3>Resumo mensal</h3>
+          <div class="skeleton-line w1"></div>
+          <div class="skeleton-line w2"></div>
+          <div class="skeleton-line w3"></div>
+          <div class="sparkline">
+            <svg viewBox="0 0 120 30" width="100%" height="30"><polyline points="0,25 15,20 30,22 45,10 60,14 75,6 90,9 105,3 120,8" fill="none" stroke="#2F6844" stroke-width="2"/></svg>
+          </div>
+          <p style="margin-top:14px;">Pronto a enviar, sem montagem manual.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="sobre">
+    <div class="wrap about-inner">
+      <div class="about-label">Sobre</div>
+      <div>
+        <p>
+          Construo dashboards e automações usadas todos os dias por
+          equipas reais — não projetos de exercício, sistemas que têm
+          de funcionar. É esse mesmo rigor que trago para negócios
+          mais pequenos, sem soluções complicadas ou sobredimensionadas.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contacto">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="section-kicker">Contacto</p>
+        <h2>Vamos falar sobre o teu processo</h2>
+        <p>Conta-me o que hoje é feito manualmente e vemos juntos o que faz sentido automatizar.</p>
+      </div>
+      <div class="contact-row">
+        <a href="mailto:o-teu-email@dominio.com" class="contact-email">o-teu-email@dominio.com</a>
+      </div>
+      <p class="contact-note">
+        Substitui por um email pessoal ou de negócio — evita usar o
+        email da tua entidade patronal para trabalho freelance.
+      </p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  Vlad Kabak — Automações e dashboards. © <span id="year"></span>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  const toggle = document.getElementById('menuToggle');
+  const links = document.getElementById('navLinks');
+  toggle.addEventListener('click', () => {
+    const isOpen = links.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+  links.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      links.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+</script>
+
+</body>
+</html>
