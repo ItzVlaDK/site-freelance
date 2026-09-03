@@ -44,9 +44,13 @@
   }
 
   .wrap{
-    max-width: 1120px;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 0 32px;
+  }
+
+  @media (min-width: 1680px){
+    .wrap, .header-inner{ max-width: 1360px; }
   }
 
   /* ---------- Header ---------- */
@@ -65,7 +69,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 20px 32px;
-    max-width: 1120px;
+    max-width: 1200px;
     margin: 0 auto;
   }
 
@@ -141,8 +145,32 @@
 
   .hero-inner{
     position: relative;
-    max-width: 720px;
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 64px;
+    align-items: center;
   }
+
+  .hero-text{ max-width: 600px; }
+
+  .hero-visual{
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 22px 24px;
+    box-shadow: 0 24px 48px -28px rgba(27,36,32,0.4);
+  }
+
+  .hero-visual-head{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+  }
+
+  .hero-visual-head span{ font-size: 0.78rem; color: var(--ink-soft); }
+
+  .hero-visual-status{ color: var(--accent) !important; font-size: 0.72rem !important; }
 
   .hero-tag{
     display: inline-block;
@@ -591,6 +619,8 @@
   /* ---------- Responsive ---------- */
 
   @media (max-width: 860px){
+    .hero-inner{ grid-template-columns: 1fr; gap: 40px; }
+    .hero-text{ max-width: none; }
     .service-grid{ grid-template-columns: 1fr; }
     .service-cell{ border-right: none; border-bottom: 1px solid var(--line); }
     .service-cell:last-child{ border-bottom: none; }
@@ -649,16 +679,43 @@
 
   <section class="hero">
     <div class="wrap hero-inner">
-      <span class="hero-tag" data-animate="1">Automação · Dashboards · Ferramentas internas</span>
-      <h1 data-animate="2">As tuas folhas de cálculo podem trabalhar sozinhas.</h1>
-      <p class="lede" data-animate="3">
-        Construo automações, dashboards e ferramentas internas para
-        negócios que ainda perdem horas por semana com processos
-        manuais.
-      </p>
-      <div class="hero-ctas" data-animate="3">
-        <a href="#contacto" class="btn-primary">Marcar uma conversa</a>
-        <a href="#exemplos" class="btn-secondary">Ver o que posso construir</a>
+      <div class="hero-text">
+        <span class="hero-tag" data-animate="1">Automação · Dashboards · Ferramentas internas</span>
+        <h1 data-animate="2">As tuas folhas de cálculo podem trabalhar sozinhas.</h1>
+        <p class="lede" data-animate="3">
+          Construo automações, dashboards e ferramentas internas para
+          negócios que ainda perdem horas por semana com processos
+          manuais.
+        </p>
+        <div class="hero-ctas" data-animate="3">
+          <a href="#contacto" class="btn-primary">Marcar uma conversa</a>
+          <a href="#exemplos" class="btn-secondary">Ver o que posso construir</a>
+        </div>
+      </div>
+      <div class="hero-visual" data-animate="3">
+        <div class="cell-ref">F7</div>
+        <div class="hero-visual-head">
+          <span>Painel · Loja Porto</span>
+          <span class="hero-visual-status">● Ativo</span>
+        </div>
+        <div class="kpi-row">
+          <div class="kpi"><div class="kpi-num">3 260€</div><div class="kpi-label">Vendas semana</div></div>
+          <div class="kpi"><div class="kpi-num">12</div><div class="kpi-label">Encomendas hoje</div></div>
+          <div class="kpi"><div class="kpi-num">0</div><div class="kpi-label">Erros</div></div>
+        </div>
+        <div class="bar-chart">
+          <div class="bar" style="height:60%"></div>
+          <div class="bar" style="height:75%"></div>
+          <div class="bar" style="height:45%"></div>
+          <div class="bar" style="height:90%"></div>
+          <div class="bar" style="height:65%"></div>
+          <div class="bar" style="height:100%"></div>
+          <div class="bar" style="height:55%"></div>
+        </div>
+        <div class="bar-labels">
+          <span>S</span><span>T</span><span>Q</span><span>Q</span><span>S</span><span>S</span><span>D</span>
+        </div>
+        <div class="dash-caption">Atualizado automaticamente às 06:00</div>
       </div>
     </div>
   </section>
